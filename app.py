@@ -1,13 +1,20 @@
 from fastapi import FastAPI
-from ai.model import predict
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+from fastapi.requests import Request
+
+from ai.model import ai_response
 
 app = FastAPI()
 
-@app.get("/")
-def home():
-    return {"message": "AI Server Running"}
+templates = Jinja2Templates(directory="templates")
+
+
+@app.get("/", response_class=HTMLResponse)
+def home(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
 
 @app.get("/ai")
 def ai(text: str):
-    result = predict(text)
-    return {"response": result}
+    return {"response": ai_response(text)}

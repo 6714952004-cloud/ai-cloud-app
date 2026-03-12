@@ -1,27 +1,14 @@
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.naive_bayes import MultinomialNB
+def ai_response(text):
 
-texts = [
-    "สวัสดี",
-    "ช่วยอะไรได้",
-    "ขอบคุณ",
-    "ลาก่อน"
-]
+    text = text.lower()
 
-labels = [
-    "hello",
-    "help",
-    "thanks",
-    "bye"
-]
+    if "hello" in text:
+        return "Hello!"
 
-vectorizer = TfidfVectorizer()
-X = vectorizer.fit_transform(texts)
+    if "สวัสดี" in text:
+        return "สวัสดีครับ"
 
-model = MultinomialNB()
-model.fit(X, labels)
+    if "hi" in text:
+        return "Hi!"
 
-def predict(text):
-    X_test = vectorizer.transform([text])
-    result = model.predict(X_test)
-    return result[0]
+    return "I don't understand"
